@@ -1,0 +1,144 @@
+---
+title: "HW2"
+output: pdf_document
+date: "Due date: 2025-02-09"
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Set up Git
+Set up your Name and Email
+
+You should set up your name and email so that your commits are properly attributed to you.  In RStudio, go to Tools → Shell and type:
+
+git config --global user.email "me@calvin.edu"
+
+git config --global user.name "my name"
+
+## Generating a new SSH key
+
+[Check the process here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+
+## Adding a SSH key to your Github account
+First, create your own Github account.
+
+Now you will connect SSH key to your Github. This enables committing and pushing your files from Rstudio to Github.
+
+[Check the process here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
+## Testing your SSH connection
+[Check the process here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
+
+## Cloning a GitHub Repository into Rstudio
+Watch Youtube video [here](https://www.youtube.com/watch?v=NInwldFZgwA)
+
+## Question 1
+This question is CH2 C1 in Wooldridge's textbook.
+
+First, import the data from the class repository [https://github.com/ekang514/ECON343_Spring2025.git](https://github.com/ekang514/ECON343_Spring2025.git)
+
+```{r}
+library(readxl)
+data <- read_excel("401k_v4.xlsx")
+head(data)
+```
+
+This fabulous 401K data is a subset of data analyzed by Papke (1995) to study the relationship between participation in a 401(k) pension plan and the generosity of the plan. The variable, prate, is the percentage of eligible workers with an active account; this is the variable to be explained. The measure of generosity is the plan match rate, mrate. This variable gives the average amount the firm contributes to each worker's plan for each $1 contribution by the worker. For example, if mrate = 0.5, then a $1 contribution by the worker is matched by a $0.50 contribution by the firm. 
+
+Other variables:
+
+totpart = total 401(k) participants;
+
+totelg=total eligible for 401(k) plan;
+
+age=age of 401(k) plan;
+
+totemp=total number of firm employees;
+
+sole=1 if 401(k) is the firm's sole plan, and =0 otherwise;
+
+ltotemp = log(totem)
+
+### (1) 
+Find the average participation rate and the average match rate in the sample of plans.
+
+### (2) 
+Now, estimate the simple regression equation
+
+$$\hat{prate}=\hat{\beta_0}+\hat{\beta_1}mrate$$
+and report the results along with the sample size and R-squared.
+
+### (3)
+Interpret the intercept in your equation. Interpret the coefficient on mrate. 
+
+### (4)
+Find the predicted prate when mrate = 2. Is this a reasonable prediction?
+
+### (5)
+How much of the variation in prate is explained by mrate? Is this a lot in your opinion?
+
+## Question 2
+This question is CH3 C2 in Wooldridge's textbook.
+```{r}
+data2 <- read_excel("hprice1_v4.xlsx")
+head(data2)
+```
+For this exercise, you will be using a variation of HPRICE1, which is cross-sectional individual data containing information on Boston, Massachusetts-area housing price (price), square footage (sqrft), number of bedrooms (bdrms), and other variables gathered from the real estate pages of the \textit{Boston Globe} during 1990. Housing prices are recorded in thousands of dollars.
+
+Other variables:
+
+assess = assssed value, in thousands of dollars
+
+lotsize = size of lot, in square feet
+
+colonial = 1 if the home is colonial style, and =0 otherwise
+
+### (1)
+Use OLS to estimate the equation: $$price = \beta_0 +\beta_1 sqrft + \beta_2 bdrms + u$$ Write out the results in the estimated equation form: $\hat{price}=$.
+
+### (2)
+What is the estimated increase in price for a house with one more bedroom, holding square footage constant?
+
+### (3)
+What is the estimated increase in price for a house with an additional bedroom that is 130 square feet in size? Is it true that a house that has current square footage converted into a new bedroom will have a lower estimated price change than a house that has a 130-square-foot addition added that is then used as a bedroom?
+
+### (4)
+What percentage of the variation in price is explained by square footage and number of bedrooms?
+
+### (5)
+Find the predicted selling price from the OLS regression line for a house that has sqrft=1,600 and berms=3.
+
+### (6)
+The actual selling price of the house in (5) was $220,000 (that is, price=220). Find the residual for this house. Does it suggest that the buyer underpaid or overpaid for the house?
+
+## Question 3
+\textbf{Omitted Variable Bias}
+
+Start with the population model $$Y=\beta_0 + \beta_1 X + u$$ with assumption $E(u|X)=0$. By the law of iterated expectation, $E(u)=0.$
+
+(1) Write $E(Y)$ in terms of parameters and $E(X)$.
+
+(2) Prove $Cov(u,X)=0$ (Hint: $Cov(a,b)=E(ab)-E(a)E(b)$).
+
+(3) Write $Cov(X,Y)$ in terms of parameters and $Var(X)$. (Hint: $Cov(a,a)=Var(a)$).
+
+(4) We have learned that OLS estimators for the simple regression model are
+$$\hat{\beta_1}=\frac{\sum^n_{i=1} (x_i-\bar{x})(y_i-\bar{y})}{\sum^n_{i=1}(x_i-\bar{x})^2}$$ $$\hat{\beta_0}=\bar{y}-\hat{\beta_1}\bar{x}$$
+Based on (3), write the population parameter $\beta_1$ in terms of $Cov(X,Y)$ and $Var(X)$.
+
+
+(5) Based on (1) and (4), write the population parameter $\beta_0$ in terms of $E(Y), Cov(X,Y), Var(X)$, and $E(X)$.
+
+(6) A model about wage and education level is given as follows:
+$$ln(wage)=\tau \cdot \text{ed} + \nu$$
+when the true relationship is
+$$ln(wage)=\beta_1 \cdot \text{ed}+\beta_2 \cdot \text{ability}+u$$
+where $E(u|ed)=0$ and $E(u|ability)=0$.
+
+Write a formula for $\tau$ using $\beta_1$ and $\beta_2$.
+
+(7) When is $\tau$ biased?
+
+(8) If $\beta_2$>0, when is this bias positive? When is it negative?
